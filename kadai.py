@@ -107,3 +107,4 @@ with open("sitemap.csv", "w", encoding="utf-8-sig", newline="") as file:
     writer.writerows(pages.items())
 
 print("sitemap.csvに保存しました")
+#緒方友哉 課題
