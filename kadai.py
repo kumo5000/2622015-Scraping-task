@@ -18,15 +18,15 @@ html_soup = BeautifulSoup(res.content, "html.parser")
 title = html_soup.title.string
 print(f"タイトル：{title}")
 
-# URL（キー）とページタイトル（値）のセットを辞書に登録する
+# URLとページタイトルのセットを辞書に登録する
 pages = {}
 pages[url] = title
 print(pages)
 
-# クロール対象を限定するため、トップページのドメイン名（ホスト部分）を取得しておく
+# 対象を限定するため、トップページのドメイン名を取得しておく
 domain = urlparse(url).netloc
 
-# ページ内にあるリンク付き（href属性あり）のaタグを全取得する
+# ページ内にあるリンク付きのタグを全取得する
 links = html_soup.find_all("a", href=True)
 same_domain_urls = []
 
@@ -34,10 +34,10 @@ for link in links:
     # 相対パス表記のリンクを絶対パスの完全なURL形式に揃える
     next_url = urljoin(res.url, link["href"])
 
-    # ページ内リンク用の末尾のID識別子（#〜）をカットする
+    # ページ内リンク用の末尾の＃をカットする
     next_url = urldefrag(next_url)[0]
 
-    # URLの構成要素（プロトコルやドメインなど）を解析する
+    # URLの構成要素を解析する
     parsed_url = urlparse(next_url)
 
     # 外部サイトを除外し、同じドメインかつhttp/httpsの安全なURLのみを抽出する
@@ -100,11 +100,11 @@ while index < len(same_domain_urls):
 print(f"タイトルを保存したページ数：{len(pages)}")
 print(f"リンク先も調べた後のURL数：{len(same_domain_urls)}")
 
-# 収集したURLとタイトルの辞書データをCSV形式（Excel文字化け対策付き）で出力する
+# 収集したURLとタイトルのデータをCSV形式で出力する
 with open("sitemap.csv", "w", encoding="utf-8-sig", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(["URL", "タイトル"])
     writer.writerows(pages.items())
 
 print("sitemap.csvに保存しました")
-#緒方友哉 課題
+#緒方 友哉　課題
